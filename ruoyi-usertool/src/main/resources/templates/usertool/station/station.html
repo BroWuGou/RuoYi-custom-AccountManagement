@@ -27,15 +27,8 @@
                                 <input type="text" name="appName"/>
                             </li>
                             <li>
-                                <label>站点状态：</label>
-                                <select name="valid" th:with="type=${@dict.getType('sys_notice_status')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>已删除：</label>
-                                <select name="deleted" th:with="type=${@dict.getType('sys_show_hide')}">
+                                <label>状态：</label>
+                                <select name="status" th:with="type=${@dict.getType('user_account_manage_station_status')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
@@ -56,7 +49,7 @@
                     </div>
                 </form>
             </div>
-
+<!-- TODO: 查询表单分两行-->
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="usertool:station:add">
                     <i class="fa fa-plus"></i> 添加
@@ -80,8 +73,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('usertool:station:edit')}]];
         var removeFlag = [[${@permission.hasPermi('usertool:station:remove')}]];
-        var validDatas = [[${@dict.getType('sys_notice_status')}]];
-        var deletedDatas = [[${@dict.getType('sys_show_hide')}]];
+        var statusDatas = [[${@dict.getType('user_account_manage_station_status')}]];
         var prefix = ctx + "usertool/station";
 
         $(function() {
@@ -117,17 +109,10 @@
                     title: '客户端名'
                 },
                 {
-                    field: 'valid',
-                    title: '站点状态',
+                    field: 'status',
+                    title: '状态',
                     formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(validDatas, value);
-                    }
-                },
-                {
-                    field: 'deleted',
-                    title: '已删除',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(deletedDatas, value);
+                        return $.table.selectDictLabel(statusDatas, value);
                     }
                 },
                 {

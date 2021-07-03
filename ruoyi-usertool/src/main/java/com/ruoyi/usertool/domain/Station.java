@@ -51,10 +51,10 @@ public class Station
 
     /** 站点状态 */
     @Excel(name = "站点状态")
-    private Integer valid;
+    private String status;
 
     /** 已删除 */
-    @Excel(name = "已删除")
+//    @Excel(name = "已删除")
     @TableLogic
     private Integer deleted;
 
