@@ -49,24 +49,30 @@ public class StationServiceImpl extends ServiceImpl<StationMapper, Station>
     @Override
     public List<Station> selectStationList(Station station)
     {
-        QueryWrapper<Station> wrapper = new QueryWrapper<>();
-        if (station.getStationName() != null && !station.getStationName().equals(""))
-            wrapper.like("station_name", station.getStationName());
-        if (station.getWebsiteUrl()  != null && !station.getWebsiteUrl().equals(""))
-            wrapper.like("website_url",  station.getWebsiteUrl());
-        if (station.getDownloadUrl() != null && !station.getDownloadUrl().equals(""))
-            wrapper.like("download_url", station.getDownloadUrl());
-        if (station.getAppName()     != null && !station.getAppName().equals(""))
-            wrapper.like("app_name",     station.getAppName());
-        if (station.getStatus()      != null && !station.getStatus().equals(""))
-            wrapper.eq("status",          station.getStatus());
-        // deleted 已经被逻辑删除的数据 无法被查询到，故注释
-//        if (station.getDeleted()     != null) wrapper.eq("deleted",        station.getDeleted());
-        if (station.getGmtCreate()   != null) wrapper.eq("gmt_create",     station.getGmtCreate());
-        if (station.getGmtModified() != null) wrapper.eq("gmt_modified",   station.getGmtModified());
+        QueryWrapper<Station> wrapper = null;
+        if (null != station) {
 
+            wrapper = new QueryWrapper<>();
+            if (station.getStationName() != null && !station.getStationName().equals(""))
+                wrapper.like("station_name", station.getStationName());
+            if (station.getWebsiteUrl() != null && !station.getWebsiteUrl().equals(""))
+                wrapper.like("website_url", station.getWebsiteUrl());
+            if (station.getDownloadUrl() != null && !station.getDownloadUrl().equals(""))
+                wrapper.like("download_url", station.getDownloadUrl());
+            if (station.getAppName() != null && !station.getAppName().equals(""))
+                wrapper.like("app_name", station.getAppName());
+
+            if (station.getStatus() != null && !station.getStatus().equals(""))
+                wrapper.eq("status", station.getStatus());
+
+            // deleted 已经被逻辑删除的数据 无法被查询到，故注释
+//        if (station.getDeleted()     != null) wrapper.eq("deleted",        station.getDeleted());
+            if (station.getGmtCreate() != null) wrapper.eq("gmt_create", station.getGmtCreate());
+            if (station.getGmtModified() != null) wrapper.eq("gmt_modified", station.getGmtModified());
+        }
         // TODO: 修复时间查询无法匹配的问题,新增时间段查询
         return stationMapper.selectList(wrapper);
+
 //        return stationMapper.selectStationList(station);
     }
 
@@ -87,6 +93,7 @@ public class StationServiceImpl extends ServiceImpl<StationMapper, Station>
 //        boolean ret = stationService.saveOrUpdate(station, wrapper);
 //        // 如果和被标记删除的数据发生主键冲突，则改为修改到原数据上
         // TODO: 逻辑删除的数据的station_name会与新插入数据重名，导致插入失败，目前暂时将表中的unique去掉，需要在在代码层增加unique实现
+
         return stationMapper.insert(station);
     }
 
@@ -109,8 +116,8 @@ public class StationServiceImpl extends ServiceImpl<StationMapper, Station>
     public int deleteStationByIds(String ids)
     {
         String[] idsStr = Convert.toStrArray(ids);
-        List<String> strings = Arrays.asList(idsStr);
-        return stationMapper.deleteBatchIds(strings);
+        List<String> idsList = Arrays.asList(idsStr);
+        return stationMapper.deleteBatchIds(idsList);
     }
 
     /**

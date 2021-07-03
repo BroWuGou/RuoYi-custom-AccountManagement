@@ -1,6 +1,9 @@
 package com.ruoyi.usertool.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysDictData;
+import com.ruoyi.system.service.ISysDictDataService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,9 @@ public class StationController extends BaseController
 
     @Autowired
     private IStationService stationService;
+
+    @Autowired
+    private ISysDictDataService sysDictDataService;
 
     @RequiresPermissions("usertool:station:view")
     @GetMapping()
@@ -86,7 +92,17 @@ public class StationController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Station station)
     {
-        return toAjax(stationService.insertStation(station));
+
+        int ret = stationService.insertStation(station);
+        if (1 == ret) {
+            //插入成功增加 user_account_manage_station_name 字典
+            SysDictData sysDictData = new SysDictData();
+            sysDictData.setDictLabel(station.getStationName());
+            sysDictData.setDictValue(String.valueOf(station.getStationId()));
+            sysDictData.setDictType("user_account_manage_station_name");
+            sysDictDataService.insertDictData(sysDictData);
+        }
+        return toAjax(ret);
     }
 
     /**
@@ -109,7 +125,16 @@ public class StationController extends BaseController
     @ResponseBody
     public AjaxResult editSave(Station station)
     {
-        return toAjax(stationService.updateStation(station));
+        int ret = stationService.updateStation(station);
+        if (1 == ret) {
+            //插入成功增加 user_account_manage_station_name 字典
+            SysDictData sysDictData = new SysDictData();
+            sysDictData.setDictLabel(station.getStationName());
+            sysDictData.setDictValue(String.valueOf(station.getStationId()));
+            sysDictData.setDictType("user_account_manage_station_name");
+            sysDictDataService.updateDictData(sysDictData);
+        }
+        return toAjax(ret);
     }
 
     /**
@@ -121,6 +146,16 @@ public class StationController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(stationService.deleteStationByIds(ids));
+        int ret = stationService.deleteStationByIds(ids);
+//        if (1 == ret) {
+//            //插入成功增加 user_account_manage_station_name 字典
+//            SysDictData sysDictData = new SysDictData();
+//            sysDictData.setDictLabel(station.getStationName());
+//            sysDictData.setDictValue(String.valueOf(station.getStationId()));
+//            sysDictData.setDictType("user_account_manage_station_name");
+//            sysDictDataService.deleteDictDataByIds(sysDictData);
+//        }
+
+        return toAjax(ret);
     }
 }
