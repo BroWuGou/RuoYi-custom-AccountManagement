@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.usertool.domain.Account;
-import com.ruoyi.usertool.domain.Passwords;
+import com.ruoyi.usertool.domain.Password;
 import org.springframework.stereotype.Repository;
 
 /**

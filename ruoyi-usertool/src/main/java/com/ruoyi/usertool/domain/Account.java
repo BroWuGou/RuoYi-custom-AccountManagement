@@ -67,7 +67,7 @@ public class Account
 
     /** $table.subTable.functionName信息 */
     @TableField(exist = false)
-    private List<Passwords> passwordsList;
+    private List<Password> passwordList;
 
     /** 站点 */
     @TableField(exist = false)

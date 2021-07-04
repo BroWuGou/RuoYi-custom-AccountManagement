@@ -21,7 +21,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  */
 @Data
 @TableName("passwords")
-public class Passwords extends BaseEntity
+public class Password extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -37,8 +37,8 @@ public class Passwords extends BaseEntity
     @Excel(name = "账户密码")
     private String password;
 
-    /** 是否有效：0无效，1有效 */
-    @Excel(name = "是否有效：0无效，1有效")
+    /** 状态 */
+    @Excel(name = "状态")
     private String status;
 
     /** 逻辑删除 */

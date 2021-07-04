@@ -49,7 +49,7 @@
                     </select>
                 </div>
             </div>
-            <h4 class="form-header h4">${subTable.functionName}信息</h4>
+            <h4 class="form-header h4">密码表</h4>
             <div class="row">
                 <div class="col-sm-12">
                     <button type="button" class="btn btn-white btn-sm" onclick="addColumn()"><i class="fa fa-plus"> 增加</i></button>
@@ -97,48 +97,20 @@
                 {
                     field: 'password',
                     align: 'center',
-                    title: '账户密码',
+                    title: '密码',
                     formatter: function(value, row, index) {
-                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordsList[%s].password' value='%s'>", index, value);
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordList[%s].password' value='%s'>", index, value);
                         return html;
                     }
                 },
                 {
                     field: 'valid',
                     align: 'center',
-                    title: '是否有效：0无效，1有效',
+                    title: '状态',
                     formatter: function(value, row, index) {
-                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordsList[%s].valid' value='%s'>", index, value);
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordList[%s].valid' value='%s'>", index, value);
                         return html;
                     }
-                },
-                {
-                    field: 'deleted',
-                    align: 'center',
-                    title: '是否被删除：0未删除，1已删除',
-                    formatter: function(value, row, index) {
-                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordsList[%s].deleted' value='%s'>", index, value);
-                        return html;
-                    }
-                },
-                {
-                    field: 'gmtCreate',
-                    align: 'center',
-                    title: '创建时间',
-                    formatter: function(value, row, index) {
-                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordsList[%s].gmtCreate' value='%s'>", index, value);
-                        return html;
-                    }
-                },
-                {
-                    field: 'gmtModified',
-                    align: 'center',
-                    title: '修改时间',
-                    formatter: function(value, row, index) {
-                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordsList[%s].gmtModified' value='%s'>", index, value);
-                        return html;
-                    }
-                
                 }]
             };
             $.table.init(options);

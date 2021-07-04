@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import com.ruoyi.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.usertool.domain.Passwords;
+import com.ruoyi.usertool.domain.Password;
 import com.ruoyi.usertool.mapper.AccountMapper;
 import com.ruoyi.usertool.domain.Account;
 import com.ruoyi.usertool.service.IAccountService;
@@ -142,12 +142,12 @@ public class AccountServiceImpl implements IAccountService
      */
     public void insertPasswords(Account account)
     {
-        List<Passwords> passwordsList = account.getPasswordsList();
+        List<Password> passwordList = account.getPasswordList();
         Long id = account.getId();
-        if (StringUtils.isNotNull(passwordsList))
+        if (StringUtils.isNotNull(passwordList))
         {
-            List<Passwords> list = new ArrayList<Passwords>();
-            for (Passwords passwords : passwordsList)
+            List<Password> list = new ArrayList<Password>();
+            for (Password passwords : passwordList)
             {
                 passwords.setAccountId(id);
                 list.add(passwords);
