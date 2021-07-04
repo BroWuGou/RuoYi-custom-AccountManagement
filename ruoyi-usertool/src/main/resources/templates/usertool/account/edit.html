@@ -11,16 +11,16 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label is-required">归属：</label>
                 <div class="col-sm-8">
-                    <select name="userId" class="form-control m-b" th:with="type=${@dict.getType('sys_user_name')}" required>
-                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{userId}"></option>
+                    <select name="userId" class="form-control m-b" th:with="userList=${@AcMaDict.getUserList()}" required>
+                        <option th:each="user : ${userList}" th:text="${user.getUserName()}" th:value="${user.getUserId()}" th:field="*{userId}"></option>
                     </select>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label is-required">站点：</label>
                 <div class="col-sm-8">
-                    <select name="stationId" class="form-control m-b" th:with="type=${@dict.getType('user_account_manage_station_name')}" required>
-                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{stationId}"></option>
+                    <select name="stationId" class="form-control m-b" th:with="stationList=${@AcMaDict.getStationList()}" required>
+                        <option th:each="station : ${stationList}" th:text="${station.getStationName()}" th:value="${station.getStationId()}" th:field="*{stationId}"></option>
                     </select>
                 </div>
             </div>

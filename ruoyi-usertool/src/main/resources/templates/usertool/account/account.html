@@ -12,16 +12,16 @@
                         <ul>
                             <li>
                                 <label>归属：</label>
-                                <select name="userId" th:with="type=${@dict.getType('sys_user_name')}">
+                                <select name="userId" th:with="userList=${@AcMaDict.getUserList()}">
                                     <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                    <option th:each="user : ${userList}" th:text="${user.getUserName()}" th:value="${user.getUserId()}"></option>
                                 </select>
                             </li>
                             <li>
                                 <label>站点：</label>
-                                <select name="stationId" th:with="type=${@dict.getType('user_account_manage_station_name')}">
+                                <select name="stationId" th:with="stationList=${@AcMaDict.getStationList()}">
                                     <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                    <option th:each="station : ${stationList}" th:text="${station.getStationName()}" th:value="${station.getStationId()}"></option>
                                 </select>
                             </li>
                             <li>
@@ -79,8 +79,8 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('usertool:account:edit')}]];
         var removeFlag = [[${@permission.hasPermi('usertool:account:remove')}]];
-        var userIdDatas = [[${@dict.getType('sys_user_name')}]];
-        var stationIdDatas = [[${@dict.getType('user_account_manage_station_name')}]];
+        var userIdDatas = [[${@AcMaDict.getUserList()}]];
+        var stationIdDatas = [[${@AcMaDict.getStationList()}]];
         var statusDatas = [[${@dict.getType('user_account_manage_account_status')}]];
         var prefix = ctx + "usertool/account";
 
@@ -104,14 +104,14 @@
                     field: 'userId',
                     title: '归属',
                     formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(userIdDatas, value);
+                       return $.table.selectUserLabel(userIdDatas, value);
                     }
                 },
                 {
                     field: 'stationId',
                     title: '站点',
                     formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(stationIdDatas, value);
+                       return $.table.selectStationLabel(stationIdDatas, value);
                     }
                 },
                 {

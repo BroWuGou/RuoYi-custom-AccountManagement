@@ -520,6 +520,34 @@ var table = {
             	}
             	return $.common.uniqueFn(rows);
             },
+            // 回显用户名（从List<SysUser>中根据userId返回userName）
+            selectUserLabel: function(datas, value) {
+                if ($.common.isEmpty(datas) || $.common.isEmpty(value)) {
+                    return '';
+                }
+                var actions = [];
+                $.each(datas, function(index, user) {
+                    if (user.userId == value) {
+                        actions.push($.common.sprintf(user.userName));
+                        return false;
+                    }
+                });
+                return actions.join('');
+            },
+            // 回显站点名（从List<Station>中根据stationId返回stationName）
+            selectStationLabel: function(datas, value) {
+                if ($.common.isEmpty(datas) || $.common.isEmpty(value)) {
+                    return '';
+                }
+                var actions = [];
+                $.each(datas, function(index, station) {
+                    if (station.stationId == value) {
+                        actions.push($.common.sprintf(station.stationName));
+                        return false;
+                    }
+                });
+                return actions.join('');
+            },
             // 回显数据字典
             selectDictLabel: function(datas, value) {
             	if ($.common.isEmpty(datas) || $.common.isEmpty(value)) {

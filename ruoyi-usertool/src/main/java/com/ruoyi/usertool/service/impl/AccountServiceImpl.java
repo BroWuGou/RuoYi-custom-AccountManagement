@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ruoyi.usertool.domain.Station;
+import com.ruoyi.usertool.mapper.StationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class AccountServiceImpl implements IAccountService
 {
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private StationMapper stationMapper;
 
     /**
      * 查询账密簿
@@ -63,7 +67,13 @@ public class AccountServiceImpl implements IAccountService
         if (account.getGmtCreate()   != null)   wrapper.eq("gmt_create",      account.getGmtCreate());
         if (account.getGmtModified() != null)   wrapper.eq("gmt_modified",    account.getGmtModified());
 
-        return accountMapper.selectList(wrapper);
+        List<Account> accountList = accountMapper.selectList(wrapper);
+        for (Account accountE : accountList) {
+            Station station = stationMapper.selectById(accountE.getStationId());
+            accountE.setStation(station);
+        }
+
+        return accountList;
     }
 
     /**
