@@ -110,10 +110,19 @@
                     align: 'center',
                     title: '状态',
                     formatter: function(value, row, index) {
+                        /*TODO: edit修改密码状态下拉菜单*/
                         var html = $.common.sprintf("<input class='form-control' type='text' name='passwordList[%s].status' value='%s'>", index, value);
                         return html;
                     }
-				}]
+				},
+                {
+                    field: 'gmtCreate',
+                    title: '创建时间'
+                },
+                {
+                    field: 'gmtModified',
+                    title: '修改时间'
+                }]
             };
             $.table.init(options);
         });

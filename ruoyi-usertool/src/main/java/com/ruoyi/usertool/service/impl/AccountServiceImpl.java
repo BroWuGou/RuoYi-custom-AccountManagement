@@ -114,6 +114,7 @@ public class AccountServiceImpl implements IAccountService
     @Override
     public int updateAccount(Account account)
     {
+        /*TODO: edit中的所有操作(对account表和passwd表)都需要放到一个事务中保证原子性*/
         int ret = accountMapper.updateById(account);
 //        accountMapper.deletePasswordsByAccountId(account.getId());
 //        insertPasswords(account);
@@ -130,6 +131,7 @@ public class AccountServiceImpl implements IAccountService
     @Override
     public int deleteAccountByIds(String ids)
     {
+        //TODO: 增加关联密码判断,如果存在密码,删除失败
 //        accountMapper.deletePasswordsByAccountIds(Convert.toStrArray(ids));
         String[] idsStr = Convert.toStrArray(ids);
         List<String> idsList = Arrays.asList(idsStr);

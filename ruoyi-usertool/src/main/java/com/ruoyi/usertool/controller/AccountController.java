@@ -1,6 +1,11 @@
 package com.ruoyi.usertool.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.alibaba.fastjson.JSON;
+import com.ruoyi.common.core.domain.CxSelect;
+import com.ruoyi.common.utils.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,4 +128,17 @@ public class AccountController extends BaseController
     {
         return toAjax(accountService.deleteAccountByIds(ids));
     }
+
+
+    /**
+     * 管理密码表
+     */
+    @GetMapping("/editPasswords/{id}")
+    public String editPasswords(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        Account account = accountService.selectAccountById(id);
+        mmap.put("account", account);
+        return "usertool/password/edit";
+    }
+
 }
