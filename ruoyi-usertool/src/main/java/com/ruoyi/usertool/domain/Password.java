@@ -21,7 +21,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  */
 @Data
 @TableName("passwords")
-public class Password extends BaseEntity
+public class Password
 {
     private static final long serialVersionUID = 1L;
 
@@ -30,19 +30,20 @@ public class Password extends BaseEntity
     private Long passwordId;
 
     /** 账户id:table accounts->id */
-    @Excel(name = "账户id:table accounts->id")
+    @Excel(name = "账户id->id")
     private Long accountId;
 
     /** 账户密码 */
     @Excel(name = "账户密码")
     private String password;
 
+    // TODO: 增加有效期字段
+
     /** 状态 */
     @Excel(name = "状态")
     private String status;
 
     /** 逻辑删除 */
-//    @Excel(name = "是否被删除：0未删除，1已删除")
     @TableLogic
     private Integer deleted;
 

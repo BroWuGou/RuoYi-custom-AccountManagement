@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.usertool.domain.Station;
+import com.ruoyi.usertool.mapper.PasswordMapper;
 import com.ruoyi.usertool.mapper.StationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,12 @@ public class AccountServiceImpl implements IAccountService
     @Autowired
     private StationMapper stationMapper;
 
+    @Autowired
+    private PasswordMapper passwordMapper;
+
+    @Autowired
+    private IService<Password> passwordService;
+
     /**
      * 查询账密簿
      * 
@@ -41,7 +49,12 @@ public class AccountServiceImpl implements IAccountService
     @Override
     public Account selectAccountById(Long id)
     {
-        return accountMapper.selectById(id);
+        Account account = accountMapper.selectById(id);
+        QueryWrapper<Password> wrapper = new QueryWrapper<Password>();
+        wrapper.eq("account_id", account.getId());
+        account.setPasswordList(passwordService.list(wrapper));
+
+        return account;
     }
 
     /**
@@ -87,7 +100,7 @@ public class AccountServiceImpl implements IAccountService
     public int insertAccount(Account account)
     {
         int rows = accountMapper.insert(account);
-//        insertPasswords(account);
+        insertPasswords(account);
         return rows;
     }
 
@@ -101,9 +114,10 @@ public class AccountServiceImpl implements IAccountService
     @Override
     public int updateAccount(Account account)
     {
+        int ret = accountMapper.updateById(account);
 //        accountMapper.deletePasswordsByAccountId(account.getId());
 //        insertPasswords(account);
-        return accountMapper.updateById(account);
+        return ret;
     }
 
     /**
@@ -136,7 +150,7 @@ public class AccountServiceImpl implements IAccountService
     }
 
     /**
-     * 新增${subTable.functionName}信息
+     * 新增password
      * 
      * @param account 账密簿对象
      */
@@ -154,8 +168,12 @@ public class AccountServiceImpl implements IAccountService
             }
             if (list.size() > 0)
             {
+                passwordService.saveBatch(list);
 //                accountMapper.batchPasswords(list);
             }
         }
     }
+
+
+
 }

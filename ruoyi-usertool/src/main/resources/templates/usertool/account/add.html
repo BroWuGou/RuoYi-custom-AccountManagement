@@ -85,15 +85,16 @@
                 columns: [{
                     checkbox: true
                 },
-                {
-                    field: 'index',
-                    align: 'center',
-                    title: "序号",
-                    formatter: function (value, row, index) {
-                    	var columnIndex = $.common.sprintf("<input type='hidden' name='index' value='%s'>", $.table.serialNumber(index));
-                    	return columnIndex + $.table.serialNumber(index);
-                    }
-                },
+                // {
+                //     field: 'index',
+                //     align: 'center',
+                //     title: "序号",
+                //     visible: false,
+                //     formatter: function (value, row, index) {
+                //     	var columnIndex = $.common.sprintf("<input type='hidden' name='index' value='%s'>", $.table.serialNumber(index));
+                //     	return columnIndex + $.table.serialNumber(index);
+                //     }
+                // },
                 {
                     field: 'password',
                     align: 'center',
@@ -104,11 +105,16 @@
                     }
                 },
                 {
-                    field: 'valid',
+                    field: 'status',
                     align: 'center',
                     title: '状态',
                     formatter: function(value, row, index) {
-                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordList[%s].valid' value='%s'>", index, value);
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='passwordList[%s].status' value='%s'>", index, value);
+
+                        // var html = $.common.sprintf(
+                        //     "        <select name=\"status\" class=\"form-control\" th:with=\"type=${@dict.getType('user_account_manage_password_status')}\" required>\n" +
+                        //     "            <option th:each=\"dict : ${type}\" th:text=\"${dict.dictLabel}\" th:value=\"${dict.dictValue}\"></option>\n" +
+                        //     "        </select>\n");
                         return html;
                     }
                 }]
@@ -125,7 +131,7 @@
                 row: {
                     index: $.table.serialNumber(count),
                     password: "",
-                    valid: "",
+                    status: "",
                     deleted: "",
                     gmtCreate: "",
                     gmtModified: ""

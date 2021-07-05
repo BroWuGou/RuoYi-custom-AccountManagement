@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.usertool.service.StationService;
 import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +24,14 @@ import com.ruoyi.common.core.text.Convert;
  */
 @Service
 public class StationServiceImpl extends ServiceImpl<StationMapper, Station>
-        implements IStationService, StationService
+        implements IStationService, IService<Station>
 {
     @Autowired
     private StationMapper stationMapper;
 
     @Autowired
-    private StationService stationService;
+//    private StationService stationService;
+    IService<Station> stationIService;
     /**
      * 查询站点
      * 
