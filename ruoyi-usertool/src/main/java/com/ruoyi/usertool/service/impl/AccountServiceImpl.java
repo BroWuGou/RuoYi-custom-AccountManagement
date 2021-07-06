@@ -134,10 +134,19 @@ public class AccountServiceImpl implements IAccountService
     public int deleteAccountByIds(String ids)
     {
         //TODO: 增加关联密码判断,如果存在密码,删除失败
-//        accountMapper.deletePasswordsByAccountIds(Convert.toStrArray(ids));
         String[] idsStr = Convert.toStrArray(ids);
         List<String> idsList = Arrays.asList(idsStr);
-        return accountMapper.deleteBatchIds(idsList);
+        int deleteCnt = idsList.size();
+
+        int passwordCnt = getPasswordCntByAccountIds(idsList);
+        if (0 != passwordCnt)
+            return -1;
+
+        int cnt = accountMapper.deleteBatchIds(idsList);
+        int ret = -1;
+        if (deleteCnt == cnt)
+            ret = cnt;
+        return ret;
     }
 
     /**
@@ -150,7 +159,8 @@ public class AccountServiceImpl implements IAccountService
     public int deleteAccountById(Long id)
     {
 //        accountMapper.deletePasswordsByAccountId(id);
-        return accountMapper.deleteById(id);
+        return -1;
+//        return accountMapper.deleteById(id);
     }
 
     /**
@@ -178,6 +188,16 @@ public class AccountServiceImpl implements IAccountService
         }
     }
 
+    private int getPasswordCntByAccountIds(List<String> idsList) {
+        if (idsList.size() == 0)
+            return 0;
+        QueryWrapper<Password> wrapper = new QueryWrapper<Password>();
+        wrapper.in("account_id", idsList);
+        int cnt = passwordMapper.selectCount(wrapper);
+        return cnt;
+
+
+    }
 
 
 }

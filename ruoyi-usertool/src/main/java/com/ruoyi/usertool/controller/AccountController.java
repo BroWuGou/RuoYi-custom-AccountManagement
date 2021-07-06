@@ -126,7 +126,8 @@ public class AccountController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(accountService.deleteAccountByIds(ids));
+        int rows = accountService.deleteAccountByIds(ids);
+        return toAjax(rows, "删除成功", "删除失败,检查账号下是否绑定有密码");
     }
 
 
@@ -142,4 +143,7 @@ public class AccountController extends BaseController
         return "usertool/password/password.html";
     }
 
+    protected AjaxResult toAjax(int rows, String successMsg, String errorMsg) {
+        return rows > 0 ? success(successMsg) : error(errorMsg);
+    }
 }
