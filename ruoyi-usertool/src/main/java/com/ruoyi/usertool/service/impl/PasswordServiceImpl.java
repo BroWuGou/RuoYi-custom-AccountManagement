@@ -10,6 +10,7 @@ import com.ruoyi.usertool.service.IPasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,11 +50,14 @@ public class PasswordServiceImpl extends ServiceImpl<PasswordMapper, Password>
     {
         QueryWrapper<Password> wrapper = null;
         if (null != password) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             wrapper = new QueryWrapper<>();
             if (password.getAccountId() != null)
                 wrapper.eq("account_id", password.getAccountId());
             if (password.getStatus() != null && !password.getStatus().equals(""))
                 wrapper.eq("status", password.getStatus());
+            if (password.getGmtCreate() != null) wrapper.like("gmt_create", simpleDateFormat.format(password.getGmtCreate()));
+            if (password.getGmtModified() != null) wrapper.like("gmt_modified", simpleDateFormat.format(password.getGmtModified()));
         }
         return passwordMapper.selectList(wrapper);
     }

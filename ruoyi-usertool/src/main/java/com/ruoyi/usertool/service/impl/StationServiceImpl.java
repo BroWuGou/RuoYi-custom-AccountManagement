@@ -1,5 +1,6 @@
 package com.ruoyi.usertool.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,7 @@ public class StationServiceImpl extends ServiceImpl<StationMapper, Station>
     {
         QueryWrapper<Station> wrapper = null;
         if (null != station) {
-
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             wrapper = new QueryWrapper<>();
             if (station.getStationName() != null && !station.getStationName().equals(""))
                 wrapper.like("station_name", station.getStationName());
@@ -66,10 +67,8 @@ public class StationServiceImpl extends ServiceImpl<StationMapper, Station>
             if (station.getStatus() != null && !station.getStatus().equals(""))
                 wrapper.eq("status", station.getStatus());
 
-            // deleted 已经被逻辑删除的数据 无法被查询到，故注释
-//        if (station.getDeleted()     != null) wrapper.eq("deleted",        station.getDeleted());
-            if (station.getGmtCreate() != null) wrapper.eq("gmt_create", station.getGmtCreate());
-            if (station.getGmtModified() != null) wrapper.eq("gmt_modified", station.getGmtModified());
+            if (station.getGmtCreate() != null) wrapper.like("gmt_create", simpleDateFormat.format(station.getGmtCreate()));
+            if (station.getGmtModified() != null) wrapper.like("gmt_modified", simpleDateFormat.format(station.getGmtModified()));
         }
         // TODO: 修复时间查询无法匹配的问题,新增时间段查询
         return stationMapper.selectList(wrapper);

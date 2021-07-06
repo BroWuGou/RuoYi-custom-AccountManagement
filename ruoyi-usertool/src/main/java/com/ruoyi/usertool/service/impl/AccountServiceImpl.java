@@ -1,5 +1,6 @@
 package com.ruoyi.usertool.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,6 +67,7 @@ public class AccountServiceImpl implements IAccountService
     @Override
     public List<Account> selectAccountList(Account account)
     {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         QueryWrapper<Account> wrapper = new QueryWrapper<>();
         if (account.getAccountId() != null && !account.getAccountId().equals(""))
             wrapper.like("account_id", account.getAccountId());
@@ -77,8 +79,8 @@ public class AccountServiceImpl implements IAccountService
 
         if (account.getUserId() != null)        wrapper.eq("user_id",         account.getUserId());
         if (account.getStationId() != null)     wrapper.eq("station_id",      account.getStationId());
-        if (account.getGmtCreate()   != null)   wrapper.eq("gmt_create",      account.getGmtCreate());
-        if (account.getGmtModified() != null)   wrapper.eq("gmt_modified",    account.getGmtModified());
+        if (account.getGmtCreate()   != null)   wrapper.like("gmt_create",      simpleDateFormat.format(account.getGmtCreate()));
+        if (account.getGmtModified() != null)   wrapper.like("gmt_modified",    simpleDateFormat.format(account.getGmtModified()));
 
         List<Account> accountList = accountMapper.selectList(wrapper);
         for (Account accountE : accountList) {
