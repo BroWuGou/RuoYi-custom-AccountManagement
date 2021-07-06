@@ -51,7 +51,7 @@ public class PasswordServiceImpl extends ServiceImpl<PasswordMapper, Password>
         if (null != password) {
             wrapper = new QueryWrapper<>();
             if (password.getAccountId() != null)
-                wrapper.eq("account_id", password.getPasswordId());
+                wrapper.eq("account_id", password.getAccountId());
         }
         return passwordMapper.selectList(wrapper);
     }

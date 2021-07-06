@@ -45,11 +45,12 @@ public class PasswordController extends BaseController
      * 查询密码表列表
      */
     @RequiresPermissions("usertool:password:list")
-    @PostMapping("/list")
+    @PostMapping("/list/{id}")
     @ResponseBody
-    public TableDataInfo list(Password password)
+    public TableDataInfo list(@PathVariable("id") Long id, Password password)
     {
         startPage();
+        password.setAccountId(id);
         List<Password> list = passwordService.selectPasswordList(password);
         return getDataTable(list);
     }
