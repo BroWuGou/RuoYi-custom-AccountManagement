@@ -63,6 +63,7 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
+        var statusDatas = [[${@dict.getType('user_account_manage_password_status')}]];
         var prefix = ctx + "usertool/account"
         $("#form-account-add").validate({
             focusCleanup: true
@@ -110,12 +111,11 @@
                     title: '状态',
                     formatter: function(value, row, index) {
                         // var html = $.common.sprintf("<input class='form-control' type='text' name='passwordList[%s].status' value='%s'>", index, value);
-                        /*TODO: 下拉菜单读取字典*/
+                        /*TODO: 使用statusDatas生成下拉菜单 */
                         var html = $.common.sprintf(
                             "        <select name='passwordList[%s].status' value='%s' class='form-control' required aria-required='true' aria-invalid='false'>\n" +
                             "            <option value='0'>正常</option>\n" +
-                            "            <option value='1'>封禁</option>\n" +
-                            "            <option value='2'>注销</option>\n" +
+                            "            <option value='1'>过期</option>\n" +
                             "        </select>\n", index, value);
                         return html;
                     }

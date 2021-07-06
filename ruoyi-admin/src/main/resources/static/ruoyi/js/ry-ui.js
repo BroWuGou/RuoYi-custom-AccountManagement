@@ -1113,6 +1113,29 @@ var table = {
             	var url = $.common.isEmpty(id) ? table.options.createUrl.replace("{id}", "") : table.options.createUrl.replace("{id}", id);
                 return url;
             },
+
+            // 用于account页面中跳转到管理密码页面
+            // TODO: 从common中独立出来放到usertool中
+            updatePasswordTab: function(id) {
+                table.set();
+                $.modal.openTab("修改" + table.options.modalName, $.operate.updatePasswordUrl(id));
+            },
+            // 修改访问地址
+            updatePasswordUrl: function(id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = table.options.updatePasswordUrl.replace("{id}", id);
+                } else {
+                    var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                    if (id.length == 0) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    url = table.options.updatePasswordUrl.replace("{id}", id);
+                }
+                return url;
+            },
+
             // 修改信息
             edit: function(id) {
             	table.set();

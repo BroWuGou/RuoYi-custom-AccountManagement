@@ -133,12 +133,13 @@ public class AccountController extends BaseController
     /**
      * 管理密码表
      */
-    @GetMapping("/editPasswords/{id}")
+    @RequiresPermissions("usertool:account:editPassword")
+    @GetMapping("/editPassword/{id}")
     public String editPasswords(@PathVariable("id") Long id, ModelMap mmap)
     {
         Account account = accountService.selectAccountById(id);
         mmap.put("account", account);
-        return "usertool/password/edit";
+        return "usertool/password/password.html";
     }
 
 }
