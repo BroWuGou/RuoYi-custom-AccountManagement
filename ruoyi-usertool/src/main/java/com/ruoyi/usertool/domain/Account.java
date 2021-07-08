@@ -65,9 +65,23 @@ public class Account
     @TableLogic
     private Integer deleted;
 
-    /** $table.subTable.functionName信息 */
+    /** 密码数 */
+    @Excel(name = "密码数")
+    @TableField(exist = false)
+    private Integer passwordCnt;
+
+    /** 第三方账号绑定数 */
+    @Excel(name = "第三方账号绑定数")
+    @TableField(exist = false)
+    private Integer relevanceCnt;
+
+    /** 密码列表 */
     @TableField(exist = false)
     private List<Password> passwordList;
+
+    /** 关联账户列表 */
+    @TableField(exist = false)
+    private List<Password> relevanceList;
 
     /** 站点 */
     @TableField(exist = false)

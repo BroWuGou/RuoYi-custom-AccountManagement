@@ -72,9 +72,10 @@ public class PasswordController extends BaseController
     /**
      * 新增密码表
      */
-    @GetMapping("/add")
-    public String add()
+    @GetMapping("/add/{accountId}")
+    public String add(@PathVariable("accountId") Long accountId, ModelMap mmap)
     {
+        mmap.put("accountId", accountId);
         return prefix + "/add";
     }
 

@@ -73,10 +73,8 @@ public class AccountServiceImpl implements IAccountService
             wrapper.like("account_id", account.getAccountId());
         if (account.getNickName() != null && !account.getNickName().equals(""))
             wrapper.like("nick_name", account.getNickName());
-
         if (account.getStatus() != null && !account.getStatus().equals(""))
             wrapper.eq("status", account.getStatus());
-
         if (account.getUserId() != null)        wrapper.eq("user_id",         account.getUserId());
         if (account.getStationId() != null)     wrapper.eq("station_id",      account.getStationId());
         if (account.getGmtCreate()   != null)   wrapper.like("gmt_create",      simpleDateFormat.format(account.getGmtCreate()));
@@ -86,6 +84,9 @@ public class AccountServiceImpl implements IAccountService
         for (Account accountE : accountList) {
             Station station = stationMapper.selectById(accountE.getStationId());
             accountE.setStation(station);
+            accountE.setPasswordCnt(getPasswordCntByAccountId(accountE.getId()));
+            // TODO: 获取第三方账号绑定数 relevanceCnt
+            accountE.setRelevanceCnt(0);
         }
 
         return accountList;
@@ -158,6 +159,7 @@ public class AccountServiceImpl implements IAccountService
     @Override
     public int deleteAccountById(Long id)
     {
+        //暂时不调用
 //        accountMapper.deletePasswordsByAccountId(id);
         return -1;
 //        return accountMapper.deleteById(id);
@@ -195,9 +197,14 @@ public class AccountServiceImpl implements IAccountService
         wrapper.in("account_id", idsList);
         int cnt = passwordMapper.selectCount(wrapper);
         return cnt;
-
-
     }
+
+    private Integer getPasswordCntByAccountId(Long id) {
+        QueryWrapper<Password> wrapper = new QueryWrapper<Password>();
+        wrapper.eq("account_id", id);
+        return passwordMapper.selectCount(wrapper);
+    }
+
 
 
 }
