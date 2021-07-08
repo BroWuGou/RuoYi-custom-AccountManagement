@@ -1135,6 +1135,11 @@ var table = {
                 }
                 return url;
             },
+            // 打开站点管理页面
+            editStationTab: function() {
+                $.modal.openTab("站点管理", "/usertool/station");
+            },
+
 
             // 修改信息
             edit: function(id) {
