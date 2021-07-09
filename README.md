@@ -5,6 +5,7 @@
 基本上是在整个RuoYi项目上新增了一个功能
 
 ## 数据库设计
+![image](https://user-images.githubusercontent.com/38723278/125045225-5727a480-e0cf-11eb-84cf-28d8910f4014.png)
 
 
 ## TODO
@@ -15,7 +16,7 @@
 ## 演示图
 
 ### 功能主页：账号管理页面
-![image](https://user-images.githubusercontent.com/38723278/124927448-3e68b180-e031-11eb-8d1a-f0f22bca600f.png)
+![image](https://user-images.githubusercontent.com/38723278/125045270-64dd2a00-e0cf-11eb-9b3c-f20aa07f1ec4.png)
 
 #### 新增账户页面
 ![image](https://user-images.githubusercontent.com/38723278/124927668-78d24e80-e031-11eb-97d0-879677ecd9b6.png)
