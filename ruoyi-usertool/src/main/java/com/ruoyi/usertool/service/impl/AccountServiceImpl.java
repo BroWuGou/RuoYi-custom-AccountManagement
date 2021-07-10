@@ -103,7 +103,9 @@ public class AccountServiceImpl implements IAccountService
     public int insertAccount(Account account)
     {
         int rows = accountMapper.insert(account);
-        insertPasswords(account);
+        boolean ret = insertPasswords(account);
+        if (!ret)
+            rows = -1;
         return rows;
     }
 
@@ -113,15 +115,10 @@ public class AccountServiceImpl implements IAccountService
      * @param account 账密簿
      * @return 结果
      */
-    @Transactional
     @Override
     public int updateAccount(Account account)
     {
-        /*TODO: edit中的所有操作(对account表和passwd表)都需要放到一个事务中保证原子性*/
-        int ret = accountMapper.updateById(account);
-//        accountMapper.deletePasswordsByAccountId(account.getId());
-//        insertPasswords(account);
-        return ret;
+        return accountMapper.updateById(account);
     }
 
     /**
@@ -134,7 +131,6 @@ public class AccountServiceImpl implements IAccountService
     @Override
     public int deleteAccountByIds(String ids)
     {
-        //TODO: 增加关联密码判断,如果存在密码,删除失败
         String[] idsStr = Convert.toStrArray(ids);
         List<String> idsList = Arrays.asList(idsStr);
         int deleteCnt = idsList.size();
@@ -170,8 +166,9 @@ public class AccountServiceImpl implements IAccountService
      * 
      * @param account 账密簿对象
      */
-    public void insertPasswords(Account account)
+    public boolean insertPasswords(Account account)
     {
+        boolean ret = true;
         List<Password> passwordList = account.getPasswordList();
         Long id = account.getId();
         if (StringUtils.isNotNull(passwordList))
@@ -184,10 +181,11 @@ public class AccountServiceImpl implements IAccountService
             }
             if (list.size() > 0)
             {
-                passwordService.saveBatch(list);
+                ret = passwordService.saveBatch(list);
 //                accountMapper.batchPasswords(list);
             }
         }
+        return ret;
     }
 
     private int getPasswordCntByAccountIds(List<String> idsList) {
