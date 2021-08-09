@@ -75,8 +75,8 @@ public class AccountServiceImpl implements IAccountService
             wrapper.like("nick_name", account.getNickName());
         if (account.getStatus() != null && !account.getStatus().equals(""))
             wrapper.eq("status", account.getStatus());
-        if (account.getUserId() != null)        wrapper.eq("user_id",         account.getUserId());
-        if (account.getStationId() != null)     wrapper.eq("station_id",      account.getStationId());
+        if (account.getUserId() != null)        wrapper.eq("user_id",           account.getUserId());
+        if (account.getStationId() != null)     wrapper.eq("station_id",        account.getStationId());
         if (account.getGmtCreate()   != null)   wrapper.like("gmt_create",      simpleDateFormat.format(account.getGmtCreate()));
         if (account.getGmtModified() != null)   wrapper.like("gmt_modified",    simpleDateFormat.format(account.getGmtModified()));
 
